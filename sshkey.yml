@@ -1,0 +1,8 @@
+---
+- name: Copies pubkey into authorized_keys
+  hosts: linuxhosts
+  gather_facts: false
+
+  tasks:
+    - name: copies key into authorized_keys
+      ansible.builtin.shell: cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys

